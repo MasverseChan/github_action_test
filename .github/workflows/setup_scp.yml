@@ -17,7 +17,6 @@ jobs:
       output2: ${{ steps.step1.outputs.username }}
     steps:
       - id: step1
-      - name: Set scp deployment variables
         run: |
           mkdir -p ~/.ssh
           if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
