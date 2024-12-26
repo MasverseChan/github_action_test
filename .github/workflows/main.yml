@@ -37,6 +37,9 @@ jobs:
     needs : [build , set_up] 
     runs-on: ubuntu-latest
     steps:
+      - name : print
+        run : echo ${{needs.set_up.outputs.host }} 
+    
       - name: Deploy with scp-action
         uses: appleboy/scp-action@v0.1.7
         with:
