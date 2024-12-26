@@ -18,9 +18,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: Branch name
-        run: echo running on branch ${GITHUB_REF##*/}
-        
       - name: Create .env file
         run: |
           if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
@@ -28,17 +25,11 @@ jobs:
           elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
             echo "${{ secrets.DEV_ENV_FILE }}" > .env
           else
-            echo "Branch not configured for dynamic .env creation."
+            echo "Branch not configured for .env creation."
             exit 1
           fi
 
-      - name: Log .env file contents (for debugging)
-        run: |
-          echo "Logging .env Key:"
-          awk -F= '{print $1}' .env
-
       - name: Set scp deployment variables
-        id: set-vars
         run: |
           mkdir -p ~/.ssh
           if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
