@@ -30,7 +30,7 @@ jobs:
           fi
 
   set-up-deploy:
-    uses: ./.github/workflows/setup-scp.yml
+    uses: ./.github/workflows/setup_scp.yml
 
   deploy:
     runs-on: ubuntu-latest
