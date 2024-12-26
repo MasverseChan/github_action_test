@@ -22,7 +22,15 @@ jobs:
         run: echo running on branch ${GITHUB_REF##*/}
         
       - name: Create .env file
-        run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+        run: |
+          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+            echo "${{ secrets.MAIN_ENV_FILE }}" > .env
+          elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
+            echo "${{ secrets.DEV_ENV_FILE }}" > .env
+          else
+            echo "Branch not configured for dynamic .env creation."
+            exit 1
+          fi
 
       - name: Log .env file contents (for debugging)
         run: |
