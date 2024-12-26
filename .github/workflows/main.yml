@@ -67,7 +67,7 @@ jobs:
         with:
           host: ${{ env.host }}
           username: ${{ env.username }}
-          key: ~/.ssh/id_rsa
+          key_path: ~/.ssh/id_rsa
           source: "README.md"
           target: "/var/www/vin_test"
 
