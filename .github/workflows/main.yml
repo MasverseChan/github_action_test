@@ -30,18 +30,18 @@ jobs:
             exit 1
           fi
 
-  set-up-deploy:
+  set_up:
     uses: ./.github/workflows/setup_scp.yml
 
   deploy:
-    needs : [build , set-up-deploy] 
+    needs : [build , set_up] 
     runs-on: ubuntu-latest
     steps:
       - name: Deploy with scp-action
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ needs.set-up-deploy.outputs.host }}
-          username: ${{ needs.set-up-deploy.outputs.username }}
+          host: ${{ needs.set_up.outputs.host }}
+          username: ${{ needs.set_up.outputs.username }}
           key_path : 'id_rsa'
           source: "./README.md"
           target: "/var/www/vin_test"
