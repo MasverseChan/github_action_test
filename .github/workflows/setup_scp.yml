@@ -5,14 +5,18 @@ on:
     outputs:
         host:
           description: "SCP Host"
-          value: ${{ jobs.set-up-variable.outputs.host }}
+          value: ${{ jobs.set-up-variable.outputs.output1  }}
         username:
           description: "SCP Username"
-          value: ${{ jobs.set-up-variable.outputs.username }}
+          value: ${{ jobs.set-up-variable.outputs.output2 }}
 jobs:
   set-up-variable:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.host }}
+      output2: ${{ steps.:.outputs.username }}
     steps:
+      - id: step1
       - name: Set scp deployment variables
         run: |
           mkdir -p ~/.ssh
