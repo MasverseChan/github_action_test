@@ -21,7 +21,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
-            echo "host=${{ secrets.MAIN_SCP_CONFIG_HOST }}" >> "$GITHUB_OUTPUT"
+            echo "host=hello" >> "$GITHUB_OUTPUT"
             echo "username=${{ secrets.MAIN_SCP_CONFIG_USERNAME }}" >> "$GITHUB_OUTPUT"
             echo "${{ secrets.MAIN_SCP_CONFIG_KEY }}" > id_rsa
           elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
