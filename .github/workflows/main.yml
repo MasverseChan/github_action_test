@@ -53,7 +53,7 @@ jobs:
             echo "Branch not configured for deployment."
             exit 1
           fi
-          chmod 666 id_rsa
+          chmod 644 id_rsa
 
       - name: Deploy with scp-action
         uses: appleboy/scp-action@v0.1.7
