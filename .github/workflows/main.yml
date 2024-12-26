@@ -44,13 +44,13 @@ jobs:
             echo "host=${{ secrets.MAIN_SCP_CONFIG_HOST }}" >> $GITHUB_ENV
             echo "username=${{ secrets.MAIN_SCP_CONFIG_USERNAME }}" >> $GITHUB_ENV
             mkdir -p ~/.ssh
-            echo "key=${{ secrets.MAIN_SCP_CONFIG_KEY }}" >> ~/.ssh/id_rsa
+            echo "${{ secrets.MAIN_SCP_CONFIG_KEY }}" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa 
           elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
             echo "host=${{ secrets.DEV_SCP_CONFIG_HOST }}" >> $GITHUB_ENV
             echo "username=${{ secrets.DEV_SCP_CONFIG_USERNAME }}" >> $GITHUB_ENV
             mkdir -p ~/.ssh
-            echo "key=${{ secrets.DEV_SCP_CONFIG_KEY }}" >> ~/.ssh/id_rsa
+            echo "${{ secrets.DEV_SCP_CONFIG_KEY }}" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
           else
             echo "Branch not configured for deployment."
