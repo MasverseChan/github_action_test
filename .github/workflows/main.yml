@@ -9,11 +9,10 @@ on:
       - dev
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
@@ -30,25 +29,30 @@ jobs:
             exit 1
           fi
 
-  set_up:
-    uses: ./.github/workflows/setup_scp.yml
-    secrets: inherit
+      - name: Set scp deployment variables
+        run: |
+          mkdir -p ~/.ssh
+          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+            echo "host=${{ secrets.MAIN_SCP_CONFIG_HOST }}" >> $GITHUB_ENV
+            echo "username=${{ secrets.MAIN_SCP_CONFIG_USERNAME }}" >> $GITHUB_ENV
+            echo "${{ secrets.MAIN_SCP_CONFIG_KEY }}" > id_rsa
+          elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
+            echo "host=${{ secrets.DEV_SCP_CONFIG_HOST }}" >> $GITHUB_ENV
+            echo "username=${{ secrets.DEV_SCP_CONFIG_USERNAME }}" >> $GITHUB_ENV
+            echo "${{ secrets.DEV_SCP_CONFIG_KEY }}" > id_rsa
+          else
+            echo "Branch not configured for deployment."
+            exit 1
+          fi
+          chmod 644 id_rsa
 
-  deploy:
-    needs : [build , set_up] 
-    runs-on: ubuntu-latest
-    steps:
-      - name : print
-        run : echo ${{needs.set_up.outputs.host }} 
-    
       - name: Deploy with scp-action
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ needs.set_up.outputs.host }}
-          username: ${{ needs.set_up.outputs.username }}
+          host: ${{ env.host }}
+          username: ${{ env.username }}
           key_path : 'id_rsa'
           source: "./README.md"
           target: "/var/www/vin_test"
 
           
-  
