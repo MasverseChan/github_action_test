@@ -32,6 +32,7 @@ jobs:
 
   set_up:
     uses: ./.github/workflows/setup_scp.yml
+    secrets: inherit
 
   deploy:
     needs : [build , set_up] 
