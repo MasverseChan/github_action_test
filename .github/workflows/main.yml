@@ -57,6 +57,10 @@ jobs:
             exit 1
           fi
 
+      - name: Print environment variables
+        run: |
+          cat $GITHUB_ENV
+
       - name: Deploy with scp-action
         uses: appleboy/scp-action@v0.1.7
         with:
