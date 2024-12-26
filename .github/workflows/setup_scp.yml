@@ -2,7 +2,13 @@ name: Setup SCP Variable
 
 on:
   workflow_call: 
-
+    outputs:
+        host:
+          description: "SCP Host"
+          value: ${{ jobs.set-up-variable.outputs.host }}
+        username:
+          description: "SCP Username"
+          value: ${{ jobs.set-up-variable.outputs.username }}
 jobs:
   set-up-variable:
     runs-on: ubuntu-latest
