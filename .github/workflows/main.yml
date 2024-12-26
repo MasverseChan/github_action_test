@@ -41,8 +41,8 @@ jobs:
         id: set-vars
         run: |
           if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
-            echo "host=123" >> $GITHUB_ENV
-            echo "username=123" >> $GITHUB_ENV
+            echo "host=52.77.31.61" >> $GITHUB_ENV
+            echo "username=ubuntu" >> $GITHUB_ENV
             mkdir -p ~/.ssh
             echo "${{ secrets.MAIN_SCP_CONFIG_KEY }}" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa 
