@@ -67,7 +67,7 @@ jobs:
           host: ${{ env.host }}
           username: ${{ env.username }}
           key: ${{ secrets.MAIN_SCP_CONFIG_KEY }}
-          source: "README.md"
+          source: "./README.md"
           target: "/var/www/vin_test"
 
           
