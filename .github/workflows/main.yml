@@ -43,7 +43,6 @@ jobs:
           if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
             echo "host=${{ secrets.MAIN_SCP_CONFIG_HOST }}" >> $GITHUB_ENV
             echo "username=${{ secrets.MAIN_SCP_CONFIG_USERNAME }}" >> $GITHUB_ENV
-            echo "key=${{ secrets.MAIN_SCP_CONFIG_KEY }}" >> $GITHUB_ENV
           elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
             echo "host=${{ secrets.DEV_SCP_CONFIG_HOST }}" >> $GITHUB_ENV
             echo "username=${{ secrets.DEV_SCP_CONFIG_USERNAME }}" >> $GITHUB_ENV
