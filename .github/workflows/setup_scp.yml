@@ -5,12 +5,13 @@ on:
     outputs:
         host:
           description: "SCP Host"
-          value: ${{ jobs.set-up-variable.outputs.output1  }}
+          value: ${{ jobs.set_up.outputs.output1  }}
         username:
           description: "SCP Username"
-          value: ${{ jobs.set-up-variable.outputs.output2 }}
+          value: ${{ jobs.set_up.outputs.output2 }}
 jobs:
-  set-up-variable:
+  set_up:
+    name: Generate variable
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.step1.outputs.host }}
