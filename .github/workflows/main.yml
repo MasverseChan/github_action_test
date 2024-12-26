@@ -1,0 +1,34 @@
+name: Deploy React
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          
+      - name: Create .env file
+        run: |
+          echo "VITE_APP_URL=https://dev.blockchaincert.my" >> .env
+          echo "VITE_APP_NAME=BlockchainCERT.my" >> .env
+          echo "VITE_APP_MODE=production" >> .env
+          echo "VITE_API_URL=https://dev-api.blockchaincert.my" >> .env
+          echo "VITE_DOMAIN=.blockchaincert.my" >> .env
+          echo "VITE_EXPLORER_URL=https://explorer-testnet.maschain.com" >> .env
+          echo "VITE_REVERB_APP_KEY=${{ secrets.VITE_REVERB_APP_KEY }}" >> .env
+          echo "VITE_REVERB_HOST=${{ vars.VITE_REVERB_HOST }}" >> .env
+          echo "VITE_REVERB_PORT=${{ vars.VITE_REVERB_PORT }}" >> .env
+          echo "VITE_REVERB_SCHEME=${{ vars.VITE_REVERB_SCHEME }}" >> .env
+          
+  
