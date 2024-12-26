@@ -40,17 +40,17 @@ jobs:
       - name: Set scp deployment variables
         id: set-vars
         run: |
+          mkdir -p ~/.ssh
           if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
             echo "host=52.77.31.61" >> $GITHUB_ENV
             echo "username=ubuntu" >> $GITHUB_ENV
-            echo "${{ secrets.MAIN_SCP_CONFIG_KEY }}" > id_rsa
-            chmod 600 id_rsa 
+            echo "${{ secrets.MAIN_SCP_CONFIG_KEY }}" > ~/.ssh/rsa
+            chmod 600 ~/.ssh/rsa
           elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
             echo "host=${{ secrets.DEV_SCP_CONFIG_HOST }}" >> $GITHUB_ENV
             echo "username=${{ secrets.DEV_SCP_CONFIG_USERNAME }}" >> $GITHUB_ENV
-            mkdir -p ~/.ssh
             echo "${{ secrets.DEV_SCP_CONFIG_KEY }}" > ~/.ssh/id_rsa
-            chmod 600 ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/rsa
           else
             echo "Branch not configured for deployment."
             exit 1
@@ -66,7 +66,7 @@ jobs:
         with:
           host: ${{ env.host }}
           username: ${{ env.username }}
-          key_path: id_rsa
+          key_path: "~/.ssh/rsa"
           source: "README.md"
           target: "/var/www/vin_test"
 
