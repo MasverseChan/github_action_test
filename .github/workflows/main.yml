@@ -51,6 +51,7 @@ jobs:
           else
             echo "Branch not configured for deployment."
             exit 1
+          fi
 
       - name: Deploy with scp-action
         uses: appleboy/scp-action@v0.1.7
