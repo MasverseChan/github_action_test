@@ -22,8 +22,8 @@ jobs:
 
       - name: Log .env file contents (for debugging)
         run: |
-          echo "Logging specific non-sensitive parts of .env:"
-          awk -F= '{print $1} {print $2}' .env
+          echo "Logging .env Key:"
+          awk -F= '{print $1}' .env
 
 
           
