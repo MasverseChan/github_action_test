@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.step1.outputs.host }}
-      output2: ${{ steps.:.outputs.username }}
+      output2: ${{ steps.step1.outputs.username }}
     steps:
       - id: step1
       - name: Set scp deployment variables
