@@ -59,8 +59,9 @@ jobs:
 
       - name: Print environment variables
         run: |
-          cat $GITHUB_ENV
-
+          echo "${{ env.host }}"
+          echo "${{ env.username }}"
+          
       - name: Deploy with scp-action
         uses: appleboy/scp-action@v0.1.7
         with:
