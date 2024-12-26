@@ -9,6 +9,19 @@ on:
         username:
           description: "SCP Username"
           value: ${{ jobs.set_up.outputs.output2 }}
+    secrets:
+      MAIN_SCP_CONFIG_HOST:
+        required: true
+      MAIN_SCP_CONFIG_USERNAME:
+        required: true
+      MAIN_SCP_CONFIG_KEY:
+        required: true
+      DEV_SCP_CONFIG_HOST:
+        required: true
+      DEV_SCP_CONFIG_USERNAME:
+        required: true
+      DEV_SCP_CONFIG_KEY:
+        required: true
 jobs:
   set_up:
     name: Generate variable
@@ -21,7 +34,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
-            echo "host=${{ secrets.DEV_SCP_CONFIG_HOST }}" >> "$GITHUB_OUTPUT"
+            echo "host=${{ secrets.MAIN_SCP_CONFIG_HOST }}" >> "$GITHUB_OUTPUT"
             echo "username=${{ secrets.MAIN_SCP_CONFIG_USERNAME }}" >> "$GITHUB_OUTPUT"
             echo "${{ secrets.MAIN_SCP_CONFIG_KEY }}" > id_rsa
           elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
