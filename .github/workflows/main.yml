@@ -42,7 +42,7 @@ jobs:
       - name: Deploy with scp-action
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ needs.set-up-deploy.outputs.host }}
+          host: 'test'
           username: ${{ needs.set-up-deploy.outputs.username }}
           key_path : 'id_rsa'
           source: "./README.md"
