@@ -9,7 +9,7 @@ on:
       - dev
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,23 +29,12 @@ jobs:
             exit 1
           fi
 
-      - name: Set scp deployment variables
-        run: |
-          mkdir -p ~/.ssh
-          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
-            echo "host=${{ secrets.MAIN_SCP_CONFIG_HOST }}" >> $GITHUB_ENV
-            echo "username=${{ secrets.MAIN_SCP_CONFIG_USERNAME }}" >> $GITHUB_ENV
-            echo "${{ secrets.MAIN_SCP_CONFIG_KEY }}" > id_rsa
-          elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
-            echo "host=${{ secrets.DEV_SCP_CONFIG_HOST }}" >> $GITHUB_ENV
-            echo "username=${{ secrets.DEV_SCP_CONFIG_USERNAME }}" >> $GITHUB_ENV
-            echo "${{ secrets.DEV_SCP_CONFIG_KEY }}" > id_rsa
-          else
-            echo "Branch not configured for deployment."
-            exit 1
-          fi
-          chmod 644 id_rsa
+  set-up-deploy:
+    uses: ./.github/workflows/reusable-workflow.yml
 
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy with scp-action
         uses: appleboy/scp-action@v0.1.7
         with:
