@@ -33,13 +33,14 @@ jobs:
     uses: ./.github/workflows/setup_scp.yml
 
   deploy:
+    needs : [build , set-up-deploy] 
     runs-on: ubuntu-latest
     steps:
       - name: Deploy with scp-action
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ env.host }}
-          username: ${{ env.username }}
+          host: ${{ needs.set-up-deploy.outputs.host }}
+          username: ${{ needs.set-up-deploy.outputs.username }}
           key_path : 'id_rsa'
           source: "./README.md"
           target: "/var/www/vin_test"
